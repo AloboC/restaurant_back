@@ -1,26 +1,23 @@
 import express from 'express'
-import cors from 'cors'
+import { corsMiddleware } from './middlewares/cors.js'
+// import { readJsonFile } from './utils/index.js'
+
+import { moviesRouter } from './routes/movies.js'
 
 const app = express()
 app.disable('x-powered-by')
 
+// middlewares
 app.use(express.json())
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      const ACCEPTED_ORIGINS = ['http://localhost:3000', 'https://www.example.com']
+app.use(corsMiddleware())
 
-      if (ACCEPTED_ORIGINS.includes(origin)) return callback(null, true)
-      if (!origin) return callback(null, true)
-    }
-  })
-)
+// routes
+app.use('/api', moviesRouter)
+
+// const file = readJsonFile('movies.json')
+// console.log(file)
 
 const port = process.env.PORT || 3000
-
-app.get('/', (req, res) => {
-  res.send('!Hello World')
-})
 
 app.listen(port, () => {
   console.log(`application is running on port ${port}`)
