@@ -25,7 +25,11 @@
     "rules": {
       "space-before-function-paren": [
         "error",
-        "never"
+        {
+          "anonymous": "ignore",
+          "named": "ignore",
+          "asyncArrow": "ignore"
+        }
       ]
     }
   }
